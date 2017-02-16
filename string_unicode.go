@@ -3,7 +3,7 @@ package goja
 import (
 	"errors"
 	"fmt"
-	"github.com/dop251/goja/parser"
+	"github.com/nilium/goja/parser"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"io"

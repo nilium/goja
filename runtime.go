@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/dop251/goja/parser"
+	"github.com/nilium/goja/parser"
 	"go/ast"
 	"math"
 	"math/rand"

@@ -13,9 +13,7 @@ import (
 	"runtime/pprof"
 	"time"
 
-	"github.com/dop251/goja"
-	"github.com/dop251/goja_nodejs/console"
-	"github.com/dop251/goja_nodejs/require"
+	"github.com/nilium/goja"
 )
 
 var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
@@ -62,9 +60,6 @@ func run() error {
 
 	vm := goja.New()
 	vm.SetRandSource(newRandSource())
-
-	new(require.Registry).Enable(vm)
-	console.Enable(vm)
 
 	vm.Set("load", func(call goja.FunctionCall) goja.Value {
 		return load(vm, call)

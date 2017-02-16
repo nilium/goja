@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/dop251/goja/file"
-	"github.com/dop251/goja/token"
+	"github.com/nilium/goja/file"
+	"github.com/nilium/goja/token"
 )
 
 const (
