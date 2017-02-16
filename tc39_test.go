@@ -295,24 +295,30 @@ func TestTC39(t *testing.T) {
 	runTC39Tests(tc39BASE, "test/annexB/built-ins/String/prototype/substr", t, ctx)
 }
 
-func setParallelTest(t testing.TB) {
-	type parallelizer interface {
-		Parallel()
+type (
+	tRunner interface {
+		Run(string, func(*testing.T)) bool
 	}
 
+	bRunner interface {
+		Run(string, func(*testing.B)) bool
+	}
+
+	parallelizer interface {
+		// Only attempt to run parallel tests here if subtests are available, since
+		// otherwise I'm not entirely sure about test behavior without further review.
+		tRunner
+		Parallel()
+	}
+)
+
+func setParallelTest(t testing.TB) {
 	if p, ok := t.(parallelizer); ok {
 		p.Parallel()
 	}
 }
 
 func runSubtest(t testing.TB, name string, test func(t testing.TB)) bool {
-	type tRunner interface {
-		Run(string, func(*testing.T)) bool
-	}
-	type bRunner interface {
-		Run(string, func(*testing.B)) bool
-	}
-
 	switch t := t.(type) {
 	case tRunner:
 		return t.Run(name, func(t *testing.T) { test(t) })
