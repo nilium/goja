@@ -2,10 +2,11 @@ package goja
 
 import (
 	"fmt"
+	"regexp"
+
 	"github.com/nilium/goja/ast"
 	"github.com/nilium/goja/file"
 	"github.com/nilium/goja/token"
-	"regexp"
 )
 
 var (
@@ -848,7 +849,6 @@ func (e *compiledFunctionLiteral) emitGetter(putOnStack bool) {
 
 	strict := e.c.scope.strict
 	p := e.c.p
-	// e.c.p.dumpCode()
 	e.c.popScope()
 	e.c.p = savedPrg
 	e.c.blockStart = savedBlockStart

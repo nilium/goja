@@ -1,10 +1,11 @@
 package goja
 
 import (
-	"github.com/nilium/goja/parser"
 	"io/ioutil"
 	"os"
 	"testing"
+
+	"github.com/nilium/goja/parser"
 )
 
 func testScript(script string, expectedResult Value, t *testing.T) {
@@ -21,7 +22,6 @@ func testScript(script string, expectedResult Value, t *testing.T) {
 
 	vm := r.vm
 	vm.prg = c.p
-	vm.prg.dumpCode(t.Logf)
 	vm.run()
 	vm.pop()
 	t.Logf("stack size: %d", len(vm.stack))
@@ -54,7 +54,6 @@ func testScript1(script string, expectedResult Value, t *testing.T) {
 
 	vm := r.vm
 	vm.prg = c.p
-	vm.prg.dumpCode(t.Logf)
 	vm.run()
 	v := vm.pop()
 	t.Logf("stack size: %d", len(vm.stack))

@@ -1,8 +1,9 @@
 package goja
 
 import (
-	"github.com/nilium/goja/parser"
 	"testing"
+
+	"github.com/nilium/goja/parser"
 )
 
 func TestVM1(t *testing.T) {
@@ -297,7 +298,6 @@ fib(35);
 
 	c := newCompiler()
 	c.compile(prg)
-	c.p.dumpCode(b.Logf)
 
 	r := &Runtime{}
 	r.init()
@@ -335,7 +335,6 @@ func BenchmarkEmptyLoop(b *testing.B) {
 	if err != nil {
 		b.Fatal(err)
 	}
-	// prg.dumpCode(log.Printf)
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
 		vm.RunProgram(prg)

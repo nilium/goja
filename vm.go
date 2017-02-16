@@ -2,7 +2,6 @@ package goja
 
 import (
 	"fmt"
-	"log"
 	"math"
 	"strconv"
 	"sync"
@@ -351,10 +350,6 @@ func (vm *vm) try(f func()) (ex *Exception) {
 			case *Exception:
 				ex = x1
 			default:
-				if vm.prg != nil {
-					vm.prg.dumpCode(log.Printf)
-				}
-				//log.Print("Stack: ", string(debug.Stack()))
 				panic(fmt.Errorf("Panic at %d: %v", vm.pc, x))
 			}
 			ex.stack = vm.captureStack(ex.stack, ctxOffset)
