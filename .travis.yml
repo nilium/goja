@@ -1,0 +1,12 @@
+language: go
+
+git:
+  submodules: true
+
+go_import_path: github.com/nilium/goja
+go:
+- 1.x
+- master
+
+install: go install -toolexec time -v ./...
+script: go test -v ./...
