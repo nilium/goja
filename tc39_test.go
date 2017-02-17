@@ -109,9 +109,10 @@ func parseTC39File(name string) (*tc39Meta, string, error) {
 
 func runTC39Test(base, name, src string, meta *tc39Meta, t testing.TB, ctx *tc39TestCtx) {
 	ctx.begin()
-	defer ctx.end()
 
 	runSubtest(t, name, func(t testing.TB) {
+		defer ctx.end()
+
 		setParallelTest(t)
 
 		vm := New()
