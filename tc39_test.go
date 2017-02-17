@@ -108,13 +108,7 @@ func parseTC39File(name string) (*tc39Meta, string, error) {
 }
 
 func runTC39Test(base, name, src string, meta *tc39Meta, t testing.TB, ctx *tc39TestCtx) {
-	ctx.begin()
-
 	runSubtest(t, name, func(t testing.TB) {
-		defer ctx.end()
-
-		setParallelTest(t)
-
 		vm := New()
 		err, early := runTC39Script(base, name, src, meta.Includes, t, ctx, vm)
 
@@ -331,12 +325,6 @@ type (
 		Parallel()
 	}
 )
-
-func setParallelTest(t testing.TB) {
-	if p, ok := t.(parallelizer); ok {
-		p.Parallel()
-	}
-}
 
 func runSubtest(t testing.TB, name string, test func(t testing.TB)) bool {
 	switch t := t.(type) {
