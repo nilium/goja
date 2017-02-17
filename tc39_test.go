@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -32,6 +33,19 @@ var (
 )
 
 type tc39TestCtx struct {
+	limit chan struct{}
+}
+
+func (c *tc39TestCtx) begin() { // P
+	if c != nil && c.limit != nil {
+		c.limit <- struct{}{}
+	}
+}
+
+func (c *tc39TestCtx) end() { // V
+	if c != nil && c.limit != nil {
+		<-c.limit
+	}
 }
 
 type TC39MetaNegative struct {
@@ -94,6 +108,9 @@ func parseTC39File(name string) (*tc39Meta, string, error) {
 }
 
 func runTC39Test(base, name, src string, meta *tc39Meta, t testing.TB, ctx *tc39TestCtx) {
+	ctx.begin()
+	defer ctx.end()
+
 	runSubtest(t, name, func(t testing.TB) {
 		setParallelTest(t)
 
@@ -268,7 +285,9 @@ func TestTC39(t *testing.T) {
 		t.Skipf("If you want to run tc39 tests, download them from https://github.com/tc39/test262 and put into %s. (%v)", tc39BASE, err)
 	}
 
-	ctx := &tc39TestCtx{}
+	ctx := &tc39TestCtx{
+		limit: make(chan struct{}, 2*runtime.GOMAXPROCS(-1)),
+	}
 
 	t.Parallel()
 
